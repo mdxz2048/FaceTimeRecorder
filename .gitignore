@@ -1,0 +1,10 @@
+build/
+*.xcodeproj
+.DS_Store
+DerivedData/
+recordings/
+*.wav
+*.mkv
+*.mov
+*.caf
+artifacts/

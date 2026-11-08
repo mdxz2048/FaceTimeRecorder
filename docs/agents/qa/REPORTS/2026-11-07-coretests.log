@@ -1,0 +1,288 @@
+Command line invocation:
+    /Applications/Xcode-26.6.0.app/Contents/Developer/usr/bin/xcodebuild -project FaceTimeRecorder.xcodeproj -scheme CoreTests -configuration Debug -derivedDataPath build -destination platform=macOS CODE_SIGN_IDENTITY=- test
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:macOS, arch:arm64, id:00006000-000870A034D8801E, name:My Mac }
+{ platform:macOS, arch:x86_64, id:00006000-000870A034D8801E, name:My Mac }
+note: Using codesigning identity override: -
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (1 target)
+    Target 'CoreTests' in project 'FaceTimeRecorder' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode-26.6.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode-26.6.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode-26.6.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode-26.6.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode-26.6.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode-26.6.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+Build description signature: 5364f8349fca2247f073ccaee1df673e
+Build description path: /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/XCBuildData/5364f8349fca2247f073ccaee1df673e.xcbuilddata
+ClangStatCache /Applications/Xcode-26.6.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode-26.6.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/SDKStatCaches.noindex/macosx26.5-25F70-e0ccf0f438feb004bd3f7bd7c992e944.sdkstatcache
+    cd /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/FaceTimeRecorder.xcodeproj
+    /Applications/Xcode-26.6.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode-26.6.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -o /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/SDKStatCaches.noindex/macosx26.5-25F70-e0ccf0f438feb004bd3f7bd7c992e944.sdkstatcache
+
+SwiftDriver CoreTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'CoreTests' from project 'FaceTimeRecorder')
+    cd /Users/lvzhipeng/Developer/FaceTimeRecorder-qa
+    builtin-SwiftDriver -- /Applications/Xcode-26.6.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name CoreTests -Onone @/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests.SwiftFileList -DDEBUG -plugin-path /Applications/Xcode-26.6.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode-26.6.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target arm64-apple-macos15.0 -g -module-cache-path /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug -Isystem /Applications/Xcode-26.6.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug -F /Applications/Xcode-26.6.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -c -j8 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/SDKStatCaches.noindex/macosx26.5-25F70-e0ccf0f438feb004bd3f7bd7c992e944.sdkstatcache -output-file-map /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/ModuleCache.noindex -sdk-module-cache-path /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests_const_extract_protocols.json -Xcc -iquote -Xcc /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/CoreTests-generated-files.hmap -Xcc -I/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/CoreTests-own-target-headers.hmap -Xcc -I/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/CoreTests-all-target-headers.hmap -Xcc -iquote -Xcc /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/CoreTests-project-headers.hmap -Xcc -I/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug/include -Xcc -I/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/Sources/CRing -Xcc -I/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/Sources/Support -Xcc -I/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/DerivedSources-normal/arm64 -Xcc -I/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/DerivedSources/arm64 -Xcc -I/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests-Swift.h -import-objc-header /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/Sources/Support/BridgingHeader.h -working-directory /Users/lvzhipeng/Developer/FaceTimeRecorder-qa -experimental-emit-module-separately -disable-cmo
+
+ProcessInfoPlistFile /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug/CoreTests.xctest/Contents/Info.plist /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/empty-CoreTests.plist (in target 'CoreTests' from project 'FaceTimeRecorder')
+    cd /Users/lvzhipeng/Developer/FaceTimeRecorder-qa
+    builtin-infoPlistUtility /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/empty-CoreTests.plist -producttype com.apple.product-type.bundle.unit-test -expandbuildsettings -platform macosx -o /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug/CoreTests.xctest/Contents/Info.plist
+
+SwiftGeneratePch normal arm64 Compiling\ bridging\ header (in target 'CoreTests' from project 'FaceTimeRecorder')
+
+SwiftDriverJobDiscovery normal arm64 Compiling bridging header (in target 'CoreTests' from project 'FaceTimeRecorder')
+
+SwiftCompile normal arm64 Compiling\ WAVWriterTests.swift /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/Tests/CoreTests/WAVWriterTests.swift (in target 'CoreTests' from project 'FaceTimeRecorder')
+
+SwiftCompile normal arm64 /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/Tests/CoreTests/WAVWriterTests.swift (in target 'CoreTests' from project 'FaceTimeRecorder')
+    cd /Users/lvzhipeng/Developer/FaceTimeRecorder-qa
+    
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ CoreTests (in target 'CoreTests' from project 'FaceTimeRecorder')
+EmitSwiftModule normal arm64 (in target 'CoreTests' from project 'FaceTimeRecorder')
+    cd /Users/lvzhipeng/Developer/FaceTimeRecorder-qa
+    
+
+SwiftDriverJobDiscovery normal arm64 Compiling WAVWriterTests.swift (in target 'CoreTests' from project 'FaceTimeRecorder')
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for CoreTests (in target 'CoreTests' from project 'FaceTimeRecorder')
+
+SwiftDriver\ Compilation\ Requirements CoreTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'CoreTests' from project 'FaceTimeRecorder')
+    cd /Users/lvzhipeng/Developer/FaceTimeRecorder-qa
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode-26.6.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name CoreTests -Onone @/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests.SwiftFileList -DDEBUG -plugin-path /Applications/Xcode-26.6.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode-26.6.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target arm64-apple-macos15.0 -g -module-cache-path /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug -Isystem /Applications/Xcode-26.6.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug -F /Applications/Xcode-26.6.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -c -j8 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/SDKStatCaches.noindex/macosx26.5-25F70-e0ccf0f438feb004bd3f7bd7c992e944.sdkstatcache -output-file-map /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/ModuleCache.noindex -sdk-module-cache-path /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests_const_extract_protocols.json -Xcc -iquote -Xcc /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/CoreTests-generated-files.hmap -Xcc -I/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/CoreTests-own-target-headers.hmap -Xcc -I/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/CoreTests-all-target-headers.hmap -Xcc -iquote -Xcc /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/CoreTests-project-headers.hmap -Xcc -I/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug/include -Xcc -I/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/Sources/CRing -Xcc -I/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/Sources/Support -Xcc -I/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/DerivedSources-normal/arm64 -Xcc -I/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/DerivedSources/arm64 -Xcc -I/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests-Swift.h -import-objc-header /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/Sources/Support/BridgingHeader.h -working-directory /Users/lvzhipeng/Developer/FaceTimeRecorder-qa -experimental-emit-module-separately -disable-cmo
+
+SwiftDriver\ Compilation CoreTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'CoreTests' from project 'FaceTimeRecorder')
+    cd /Users/lvzhipeng/Developer/FaceTimeRecorder-qa
+    builtin-Swift-Compilation -- /Applications/Xcode-26.6.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name CoreTests -Onone @/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests.SwiftFileList -DDEBUG -plugin-path /Applications/Xcode-26.6.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode-26.6.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target arm64-apple-macos15.0 -g -module-cache-path /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug -Isystem /Applications/Xcode-26.6.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug -F /Applications/Xcode-26.6.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -c -j8 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/SDKStatCaches.noindex/macosx26.5-25F70-e0ccf0f438feb004bd3f7bd7c992e944.sdkstatcache -output-file-map /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/ModuleCache.noindex -sdk-module-cache-path /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests_const_extract_protocols.json -Xcc -iquote -Xcc /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/CoreTests-generated-files.hmap -Xcc -I/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/CoreTests-own-target-headers.hmap -Xcc -I/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/CoreTests-all-target-headers.hmap -Xcc -iquote -Xcc /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/CoreTests-project-headers.hmap -Xcc -I/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug/include -Xcc -I/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/Sources/CRing -Xcc -I/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/Sources/Support -Xcc -I/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/DerivedSources-normal/arm64 -Xcc -I/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/DerivedSources/arm64 -Xcc -I/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests-Swift.h -import-objc-header /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/Sources/Support/BridgingHeader.h -working-directory /Users/lvzhipeng/Developer/FaceTimeRecorder-qa -experimental-emit-module-separately -disable-cmo
+
+SwiftMergeGeneratedHeaders /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/DerivedSources/CoreTests-Swift.h /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests-Swift.h (in target 'CoreTests' from project 'FaceTimeRecorder')
+    cd /Users/lvzhipeng/Developer/FaceTimeRecorder-qa
+    builtin-swiftHeaderTool -arch arm64 /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests-Swift.h -o /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/DerivedSources/CoreTests-Swift.h
+
+Copy /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug/CoreTests.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests.swiftsourceinfo (in target 'CoreTests' from project 'FaceTimeRecorder')
+    cd /Users/lvzhipeng/Developer/FaceTimeRecorder-qa
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests.swiftsourceinfo /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug/CoreTests.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo
+
+Ld /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug/CoreTests.xctest/Contents/MacOS/CoreTests normal (in target 'CoreTests' from project 'FaceTimeRecorder')
+    cd /Users/lvzhipeng/Developer/FaceTimeRecorder-qa
+    /Applications/Xcode-26.6.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-macos15.0 -bundle -isysroot /Applications/Xcode-26.6.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -O0 -L/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug -L/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug -L/Applications/Xcode-26.6.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug -F/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug -iframework /Applications/Xcode-26.6.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -filelist /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests.LinkFileList -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @loader_path/../Frameworks -Xlinker -rpath -Xlinker @executable_path/../Frameworks -Xlinker -object_path_lto -Xlinker /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -dependency_info -Xlinker /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode-26.6.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests.swiftmodule @/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests-linker-args.resp -framework CoreAudio -framework AudioToolbox -framework AVFoundation -framework ScreenCaptureKit -framework CoreMedia -framework CoreGraphics -Xlinker -needed_framework -Xlinker XCTest -framework XCTest -Xlinker -needed-lXCTestSwiftSupport -lXCTestSwiftSupport -Xlinker -no_adhoc_codesign -o /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug/CoreTests.xctest/Contents/MacOS/CoreTests
+
+Copy /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug/CoreTests.swiftmodule/arm64-apple-macos.swiftdoc /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests.swiftdoc (in target 'CoreTests' from project 'FaceTimeRecorder')
+    cd /Users/lvzhipeng/Developer/FaceTimeRecorder-qa
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests.swiftdoc /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug/CoreTests.swiftmodule/arm64-apple-macos.swiftdoc
+
+Copy /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug/CoreTests.swiftmodule/arm64-apple-macos.swiftmodule /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests.swiftmodule (in target 'CoreTests' from project 'FaceTimeRecorder')
+    cd /Users/lvzhipeng/Developer/FaceTimeRecorder-qa
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests.swiftmodule /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug/CoreTests.swiftmodule/arm64-apple-macos.swiftmodule
+
+Copy /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug/CoreTests.swiftmodule/arm64-apple-macos.abi.json /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests.abi.json (in target 'CoreTests' from project 'FaceTimeRecorder')
+    cd /Users/lvzhipeng/Developer/FaceTimeRecorder-qa
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests.abi.json /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug/CoreTests.swiftmodule/arm64-apple-macos.abi.json
+
+CopySwiftLibs /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug/CoreTests.xctest (in target 'CoreTests' from project 'FaceTimeRecorder')
+    cd /Users/lvzhipeng/Developer/FaceTimeRecorder-qa
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug/CoreTests.xctest/Contents/MacOS/CoreTests --scan-folder /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug/CoreTests.xctest/Contents/Frameworks --scan-folder /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug/CoreTests.xctest/Contents/PlugIns --scan-folder /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug/CoreTests.xctest/Contents/Library/SystemExtensions --scan-folder /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug/CoreTests.xctest/Contents/Extensions --platform macosx --toolchain /Applications/Xcode-26.6.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug/CoreTests.xctest/Contents/Frameworks --strip-bitcode --scan-executable /Applications/Xcode-26.6.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode-26.6.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os --back-deploy-swift-span
+
+ExtractAppIntentsMetadata (in target 'CoreTests' from project 'FaceTimeRecorder')
+    cd /Users/lvzhipeng/Developer/FaceTimeRecorder-qa
+    /Applications/Xcode-26.6.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode-26.6.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name CoreTests --sdk-root /Applications/Xcode-26.6.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk --xcode-version 17F113 --platform-family macOS --deployment-target 15.0 --bundle-identifier com.mdxz.facetime.coretests --output /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug/CoreTests.xctest/Contents/Resources --target-triple arm64-apple-macos15.0 --binary-file /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug/CoreTests.xctest/Contents/MacOS/CoreTests --dependency-file /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests_dependency_info.dat --stringsdata-file /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests.SwiftFileList --metadata-file-list /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/CoreTests.DependencyMetadataFileList --static-metadata-file-list /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/CoreTests.DependencyStaticMetadataFileList --swift-const-vals-list /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Intermediates.noindex/FaceTimeRecorder.build/Debug/CoreTests.build/Objects-normal/arm64/CoreTests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-11-07 18:34:37.398 appintentsmetadataprocessor[6759:124050] Starting appintentsmetadataprocessor export
+2026-11-07 18:34:37.400 appintentsmetadataprocessor[6759:124050] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+CodeSign /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug/CoreTests.xctest (in target 'CoreTests' from project 'FaceTimeRecorder')
+    cd /Users/lvzhipeng/Developer/FaceTimeRecorder-qa
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - -o runtime --timestamp\=none --generate-entitlement-der /Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Build/Products/Debug/CoreTests.xctest
+
+Test Suite 'All tests' started at 2026-11-07 18:34:37.882.
+Test Suite 'CoreTests.xctest' started at 2026-11-07 18:34:37.883.
+Test Suite 'DownmixTests' started at 2026-11-07 18:34:37.883.
+Test Case '-[CoreTests.DownmixTests testCanonicalSevenOneOrderStillSelectsFLFR]' started.
+Test Case '-[CoreTests.DownmixTests testCanonicalSevenOneOrderStillSelectsFLFR]' passed (0.001 seconds).
+Test Case '-[CoreTests.DownmixTests testCoreAudioLabelNamesMatchDeviceVocabulary]' started.
+Test Case '-[CoreTests.DownmixTests testCoreAudioLabelNamesMatchDeviceVocabulary]' passed (0.001 seconds).
+Test Case '-[CoreTests.DownmixTests testHomePodFlowEightChannelLayoutSelectsFirstTwo]' started.
+Test Case '-[CoreTests.DownmixTests testHomePodFlowEightChannelLayoutSelectsFirstTwo]' passed (0.001 seconds).
+Test Case '-[CoreTests.DownmixTests testIndicesAreClampedToChannelCount]' started.
+Test Case '-[CoreTests.DownmixTests testIndicesAreClampedToChannelCount]' passed (0.001 seconds).
+Test Case '-[CoreTests.DownmixTests testMissingLabelsFallBackToFirstTwoChannels]' started.
+Test Case '-[CoreTests.DownmixTests testMissingLabelsFallBackToFirstTwoChannels]' passed (0.001 seconds).
+Test Case '-[CoreTests.DownmixTests testMonoDuplicatesChannelZero]' started.
+Test Case '-[CoreTests.DownmixTests testMonoDuplicatesChannelZero]' passed (0.001 seconds).
+Test Case '-[CoreTests.DownmixTests testSelectionAcceptsLongNames]' started.
+Test Case '-[CoreTests.DownmixTests testSelectionAcceptsLongNames]' passed (0.001 seconds).
+Test Case '-[CoreTests.DownmixTests testSelectionFindsFLFRAtTheEnd]' started.
+Test Case '-[CoreTests.DownmixTests testSelectionFindsFLFRAtTheEnd]' passed (0.001 seconds).
+Test Case '-[CoreTests.DownmixTests testSelectionFollowsLabelsWhenFLFRAreNotFirst]' started.
+Test Case '-[CoreTests.DownmixTests testSelectionFollowsLabelsWhenFLFRAreNotFirst]' passed (0.001 seconds).
+Test Case '-[CoreTests.DownmixTests testSelectionIsCaseInsensitive]' started.
+Test Case '-[CoreTests.DownmixTests testSelectionIsCaseInsensitive]' passed (0.001 seconds).
+Test Case '-[CoreTests.DownmixTests testSwappedLabelsAreHonoured]' started.
+Test Case '-[CoreTests.DownmixTests testSwappedLabelsAreHonoured]' passed (0.000 seconds).
+Test Suite 'DownmixTests' passed at 2026-11-07 18:34:37.893.
+	 Executed 11 tests, with 0 failures (0 unexpected) in 0.007 (0.010) seconds
+Test Suite 'DriftResamplerTests' started at 2026-11-07 18:34:37.893.
+Test Case '-[CoreTests.DriftResamplerTests testHugeRequestIsClampedToScratchAndDoesNotCrash]' started.
+Test Case '-[CoreTests.DriftResamplerTests testHugeRequestIsClampedToScratchAndDoesNotCrash]' passed (0.033 seconds).
+Test Case '-[CoreTests.DriftResamplerTests testOverfillTrimsRatioAboveOne]' started.
+Test Case '-[CoreTests.DriftResamplerTests testOverfillTrimsRatioAboveOne]' passed (0.001 seconds).
+Test Case '-[CoreTests.DriftResamplerTests testPassthroughAtTargetFillHasUnityRatio]' started.
+Test Case '-[CoreTests.DriftResamplerTests testPassthroughAtTargetFillHasUnityRatio]' passed (0.002 seconds).
+Test Case '-[CoreTests.DriftResamplerTests testPhaseContinuesAcrossProcessCalls]' started.
+Test Case '-[CoreTests.DriftResamplerTests testPhaseContinuesAcrossProcessCalls]' passed (0.001 seconds).
+Test Case '-[CoreTests.DriftResamplerTests testRatioNeverExceedsMaximumTrim]' started.
+Test Case '-[CoreTests.DriftResamplerTests testRatioNeverExceedsMaximumTrim]' passed (0.008 seconds).
+Test Case '-[CoreTests.DriftResamplerTests testResetRestoresUnityRatio]' started.
+Test Case '-[CoreTests.DriftResamplerTests testResetRestoresUnityRatio]' passed (0.001 seconds).
+Test Case '-[CoreTests.DriftResamplerTests testTinyScratchDoesNotCrash]' started.
+Test Case '-[CoreTests.DriftResamplerTests testTinyScratchDoesNotCrash]' passed (0.001 seconds).
+Test Case '-[CoreTests.DriftResamplerTests testUnderfillTrimsRatioBelowOne]' started.
+Test Case '-[CoreTests.DriftResamplerTests testUnderfillTrimsRatioBelowOne]' passed (0.001 seconds).
+Test Case '-[CoreTests.DriftResamplerTests testUnderrunFillsZerosAndCountsMissingFrames]' started.
+Test Case '-[CoreTests.DriftResamplerTests testUnderrunFillsZerosAndCountsMissingFrames]' passed (0.001 seconds).
+Test Case '-[CoreTests.DriftResamplerTests testZeroFrameRequestIsNoOp]' started.
+Test Case '-[CoreTests.DriftResamplerTests testZeroFrameRequestIsNoOp]' passed (0.001 seconds).
+Test Suite 'DriftResamplerTests' passed at 2026-11-07 18:34:37.944.
+	 Executed 10 tests, with 0 failures (0 unexpected) in 0.048 (0.051) seconds
+Test Suite 'MuxArgumentsTests' started at 2026-11-07 18:34:37.944.
+Test Case '-[CoreTests.MuxArgumentsTests testContainerRawValues]' started.
+Test Case '-[CoreTests.MuxArgumentsTests testContainerRawValues]' passed (0.001 seconds).
+Test Case '-[CoreTests.MuxArgumentsTests testMicOnlyUsesAnullMixAndStreamOne]' started.
+Test Case '-[CoreTests.MuxArgumentsTests testMicOnlyUsesAnullMixAndStreamOne]' passed (0.001 seconds).
+Test Case '-[CoreTests.MuxArgumentsTests testMkvMapOrderIsMixRemoteMic]' started.
+Test Case '-[CoreTests.MuxArgumentsTests testMkvMapOrderIsMixRemoteMic]' passed (0.001 seconds).
+Test Case '-[CoreTests.MuxArgumentsTests testMkvWithAllThreeInputsMapsMixThenRemoteThenMic]' started.
+Test Case '-[CoreTests.MuxArgumentsTests testMkvWithAllThreeInputsMapsMixThenRemoteThenMic]' passed (0.001 seconds).
+Test Case '-[CoreTests.MuxArgumentsTests testMkvWithoutVideoReindexesInputs]' started.
+Test Case '-[CoreTests.MuxArgumentsTests testMkvWithoutVideoReindexesInputs]' passed (0.001 seconds).
+Test Case '-[CoreTests.MuxArgumentsTests testMp4WithAllThreeInputsExportsSingleMixTrack]' started.
+Test Case '-[CoreTests.MuxArgumentsTests testMp4WithAllThreeInputsExportsSingleMixTrack]' passed (0.001 seconds).
+Test Case '-[CoreTests.MuxArgumentsTests testMuxWithoutInputsThrowsBeforeRunningFFmpeg]' started.
+Test Case '-[CoreTests.MuxArgumentsTests testMuxWithoutInputsThrowsBeforeRunningFFmpeg]' passed (0.001 seconds).
+Test Case '-[CoreTests.MuxArgumentsTests testOffsetsArePlacedImmediatelyBeforeTheirInput]' started.
+Test Case '-[CoreTests.MuxArgumentsTests testOffsetsArePlacedImmediatelyBeforeTheirInput]' passed (0.001 seconds).
+Test Case '-[CoreTests.MuxArgumentsTests testPathsWithSpacesArePassedAsSingleArguments]' started.
+Test Case '-[CoreTests.MuxArgumentsTests testPathsWithSpacesArePassedAsSingleArguments]' passed (0.001 seconds).
+Test Case '-[CoreTests.MuxArgumentsTests testRemoteOnlyUsesAnullMixAndRemoteMetadata]' started.
+Test Case '-[CoreTests.MuxArgumentsTests testRemoteOnlyUsesAnullMixAndRemoteMetadata]' passed (0.001 seconds).
+Test Case '-[CoreTests.MuxArgumentsTests testTinyAndNegativeOffsetsAreIgnored]' started.
+Test Case '-[CoreTests.MuxArgumentsTests testTinyAndNegativeOffsetsAreIgnored]' passed (0.001 seconds).
+Test Case '-[CoreTests.MuxArgumentsTests testVideoOnlyProducesNoAudioArguments]' started.
+Test Case '-[CoreTests.MuxArgumentsTests testVideoOnlyProducesNoAudioArguments]' passed (0.001 seconds).
+Test Suite 'MuxArgumentsTests' passed at 2026-11-07 18:34:37.955.
+	 Executed 12 tests, with 0 failures (0 unexpected) in 0.008 (0.011) seconds
+Test Suite 'RingBufferTests' started at 2026-11-07 18:34:37.955.
+Test Case '-[CoreTests.RingBufferTests testAdvanceClampsToAvailable]' started.
+Test Case '-[CoreTests.RingBufferTests testAdvanceClampsToAvailable]' passed (0.001 seconds).
+Test Case '-[CoreTests.RingBufferTests testBlockRingDropsWhenFullAndAcceptsAgainAfterPop]' started.
+Test Case '-[CoreTests.RingBufferTests testBlockRingDropsWhenFullAndAcceptsAgainAfterPop]' passed (0.001 seconds).
+Test Case '-[CoreTests.RingBufferTests testBlockRingOversizedPushTruncatesToMaxFrames]' started.
+Test Case '-[CoreTests.RingBufferTests testBlockRingOversizedPushTruncatesToMaxFrames]' passed (0.002 seconds).
+Test Case '-[CoreTests.RingBufferTests testBlockRingPopWithTooSmallBufferDoesNotAdvance]' started.
+Test Case '-[CoreTests.RingBufferTests testBlockRingPopWithTooSmallBufferDoesNotAdvance]' passed (0.001 seconds).
+Test Case '-[CoreTests.RingBufferTests testBlockRingRejectsChannelMismatchAndEmptyPush]' started.
+Test Case '-[CoreTests.RingBufferTests testBlockRingRejectsChannelMismatchAndEmptyPush]' passed (0.001 seconds).
+Test Case '-[CoreTests.RingBufferTests testBlockRingRejectsInvalidConfiguration]' started.
+Test Case '-[CoreTests.RingBufferTests testBlockRingRejectsInvalidConfiguration]' passed (0.001 seconds).
+Test Case '-[CoreTests.RingBufferTests testBlockRingRoundTripPreservesMetadata]' started.
+Test Case '-[CoreTests.RingBufferTests testBlockRingRoundTripPreservesMetadata]' passed (0.001 seconds).
+Test Case '-[CoreTests.RingBufferTests testClearDiscardsUnreadFrames]' started.
+Test Case '-[CoreTests.RingBufferTests testClearDiscardsUnreadFrames]' passed (0.002 seconds).
+Test Case '-[CoreTests.RingBufferTests testNewRingIsEmptyAndReportsConfiguration]' started.
+Test Case '-[CoreTests.RingBufferTests testNewRingIsEmptyAndReportsConfiguration]' passed (0.001 seconds).
+Test Case '-[CoreTests.RingBufferTests testOverflowIsCountedAndPartialWritesReturnRoom]' started.
+Test Case '-[CoreTests.RingBufferTests testOverflowIsCountedAndPartialWritesReturnRoom]' passed (0.001 seconds).
+Test Case '-[CoreTests.RingBufferTests testPeekDoesNotAdvanceAndHonoursOffset]' started.
+Test Case '-[CoreTests.RingBufferTests testPeekDoesNotAdvanceAndHonoursOffset]' passed (0.001 seconds).
+Test Case '-[CoreTests.RingBufferTests testReadLessThanAvailableLeavesRemainder]' started.
+Test Case '-[CoreTests.RingBufferTests testReadLessThanAvailableLeavesRemainder]' passed (0.001 seconds).
+Test Case '-[CoreTests.RingBufferTests testSampleRingRejectsInvalidConfiguration]' started.
+Test Case '-[CoreTests.RingBufferTests testSampleRingRejectsInvalidConfiguration]' passed (0.001 seconds).
+Test Case '-[CoreTests.RingBufferTests testStereoInterleavingIsPreserved]' started.
+Test Case '-[CoreTests.RingBufferTests testStereoInterleavingIsPreserved]' passed (0.001 seconds).
+Test Case '-[CoreTests.RingBufferTests testWrapAroundPreservesOrder]' started.
+Test Case '-[CoreTests.RingBufferTests testWrapAroundPreservesOrder]' passed (0.001 seconds).
+Test Case '-[CoreTests.RingBufferTests testWriteThenReadReturnsExactFrames]' started.
+Test Case '-[CoreTests.RingBufferTests testWriteThenReadReturnsExactFrames]' passed (0.001 seconds).
+Test Case '-[CoreTests.RingBufferTests testZeroLengthCallsAreNoOps]' started.
+Test Case '-[CoreTests.RingBufferTests testZeroLengthCallsAreNoOps]' passed (0.001 seconds).
+Test Suite 'RingBufferTests' passed at 2026-11-07 18:34:37.973.
+	 Executed 17 tests, with 0 failures (0 unexpected) in 0.014 (0.018) seconds
+Test Suite 'SelfTestMappingTests' started at 2026-11-07 18:34:37.974.
+Test Case '-[CoreTests.SelfTestMappingTests testCodeRawValuesAreStable]' started.
+Test Case '-[CoreTests.SelfTestMappingTests testCodeRawValuesAreStable]' passed (0.001 seconds).
+Test Case '-[CoreTests.SelfTestMappingTests testOnlyPassedCodeReportsPassed]' started.
+Test Case '-[CoreTests.SelfTestMappingTests testOnlyPassedCodeReportsPassed]' passed (0.001 seconds).
+Test Case '-[CoreTests.SelfTestMappingTests testResultPreservesDiagnostics]' started.
+Test Case '-[CoreTests.SelfTestMappingTests testResultPreservesDiagnostics]' passed (0.001 seconds).
+Test Case '-[CoreTests.SelfTestMappingTests testSelfTestErrorDescriptionIncludesCodeAndDetail]' started.
+Test Case '-[CoreTests.SelfTestMappingTests testSelfTestErrorDescriptionIncludesCodeAndDetail]' passed (0.001 seconds).
+Test Case '-[CoreTests.SelfTestMappingTests testUnknownDeviceNeverReportsPassed]' started.
+2026-11-07 18:34:38.709565+0800 xctest[6761:124061] [plugin] AddInstanceForFactory: No factory registered for id <CFUUID 0xb1b88e400> F8BB1C28-BAE8-11D6-9C31-00039315CD46
+Test Case '-[CoreTests.SelfTestMappingTests testUnknownDeviceNeverReportsPassed]' passed (0.752 seconds).
+Test Case '-[CoreTests.SelfTestMappingTests testUnknownDeviceProducesTapErrorWithoutTCC]' started.
+Test Case '-[CoreTests.SelfTestMappingTests testUnknownDeviceProducesTapErrorWithoutTCC]' passed (0.001 seconds).
+Test Suite 'SelfTestMappingTests' passed at 2026-11-07 18:34:38.731.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.756 (0.757) seconds
+Test Suite 'WAVWriterTests' started at 2026-11-07 18:34:38.731.
+Test Case '-[CoreTests.WAVWriterTests testCloseIsIdempotent]' started.
+Test Case '-[CoreTests.WAVWriterTests testCloseIsIdempotent]' passed (0.002 seconds).
+Test Case '-[CoreTests.WAVWriterTests testDurationAtFortyFourOne]' started.
+Test Case '-[CoreTests.WAVWriterTests testDurationAtFortyFourOne]' passed (0.002 seconds).
+Test Case '-[CoreTests.WAVWriterTests testEmptyWriteIsNoOp]' started.
+Test Case '-[CoreTests.WAVWriterTests testEmptyWriteIsNoOp]' passed (0.001 seconds).
+Test Case '-[CoreTests.WAVWriterTests testExplicitZeroFrameWriteIsNoOp]' started.
+Test Case '-[CoreTests.WAVWriterTests testExplicitZeroFrameWriteIsNoOp]' passed (0.001 seconds).
+Test Case '-[CoreTests.WAVWriterTests testFloat32StereoRoundTrip]' started.
+Test Case '-[CoreTests.WAVWriterTests testFloat32StereoRoundTrip]' passed (0.001 seconds).
+Test Case '-[CoreTests.WAVWriterTests testHeaderAndDurationArePatchedOnClose]' started.
+Test Case '-[CoreTests.WAVWriterTests testHeaderAndDurationArePatchedOnClose]' passed (0.001 seconds).
+Test Case '-[CoreTests.WAVWriterTests testHeaderDataSizeStaysZeroUntilClose]' started.
+Test Case '-[CoreTests.WAVWriterTests testHeaderDataSizeStaysZeroUntilClose]' passed (0.001 seconds).
+Test Case '-[CoreTests.WAVWriterTests testHeaderFieldsForEmptyStereoFile]' started.
+Test Case '-[CoreTests.WAVWriterTests testHeaderFieldsForEmptyStereoFile]' passed (0.001 seconds).
+Test Case '-[CoreTests.WAVWriterTests testInvalidConfigurationIsRejected]' started.
+Test Case '-[CoreTests.WAVWriterTests testInvalidConfigurationIsRejected]' passed (0.001 seconds).
+Test Case '-[CoreTests.WAVWriterTests testMonoFileHasCorrectHeaderAndDuration]' started.
+Test Case '-[CoreTests.WAVWriterTests testMonoFileHasCorrectHeaderAndDuration]' passed (0.001 seconds).
+Test Case '-[CoreTests.WAVWriterTests testWriteAfterCloseThrows]' started.
+Test Case '-[CoreTests.WAVWriterTests testWriteAfterCloseThrows]' passed (0.001 seconds).
+Test Suite 'WAVWriterTests' passed at 2026-11-07 18:34:38.750.
+	 Executed 11 tests, with 0 failures (0 unexpected) in 0.016 (0.019) seconds
+Test Suite 'CoreTests.xctest' passed at 2026-11-07 18:34:38.750.
+	 Executed 67 tests, with 0 failures (0 unexpected) in 0.849 (0.867) seconds
+Test Suite 'All tests' passed at 2026-11-07 18:34:38.750.
+	 Executed 67 tests, with 0 failures (0 unexpected) in 0.849 (0.868) seconds
+2026-11-07 18:34:39.055 xcodebuild[6701:123726] [MT] IDETestOperationsObserverDebug: 1.619 elapsed -- Testing started completed.
+2026-11-07 18:34:39.055 xcodebuild[6701:123726] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-07 18:34:39.055 xcodebuild[6701:123726] [MT] IDETestOperationsObserverDebug: 1.619 sec, +1.619 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/lvzhipeng/Developer/FaceTimeRecorder-qa/build/Logs/Test/Test-CoreTests-2026.11.07_18-34-35-+0800.xcresult
+
+** TEST SUCCEEDED **
+
+Testing started

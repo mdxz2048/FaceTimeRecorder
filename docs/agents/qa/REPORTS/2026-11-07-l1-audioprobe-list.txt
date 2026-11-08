@@ -1,0 +1,44 @@
+Audio devices: 4
+
+[88] “甜姐的兵”的麦克风
+  UID        : AFEA4DFE-22E9-437C-B775-590C00000003
+  model      : iPhone Mic
+  transport  : Continuity Capture (wired) (0x63637764)
+  direction  : in=1ch / out=0ch
+  sampleRate : 48000 Hz
+  buffer     : 512 frames
+  latency    : device=0 safety=0 frames
+  in  stream 89: 48000 Hz, 1 ch, Float32, 4 B/frame
+
+[83] MacBook Pro麦克风
+  UID        : BuiltInMicrophoneDevice
+  model      : Digital Mic
+  transport  : Built-in (0x626c746e)
+  direction  : in=1ch / out=0ch
+  sampleRate : 44100 Hz
+  buffer     : 512 frames
+  latency    : device=1 safety=24 frames
+  in  stream 84: 44100 Hz, 1 ch, Float32, 4 B/frame
+
+[76] MacBook Pro扬声器
+  UID        : BuiltInSpeakerDevice
+  model      : Speaker
+  transport  : Built-in (0x626c746e)
+  direction  : in=0ch / out=2ch
+  sampleRate : 48000 Hz
+  buffer     : 512 frames
+  latency    : device=70 safety=74 frames
+  out stream 77: 48000 Hz, 2 ch, Float32, 8 B/frame
+  labels     : FL FR
+
+[69] HomePod Flow Audio
+  UID        : com.homepodflow.virtual-audio.surround71.v1
+  model      : com.homepodflow.virtual-audio.model.surround71.v1
+  transport  : Virtual (0x76697274)
+  direction  : in=0ch / out=8ch
+  sampleRate : 48000 Hz
+  buffer     : 512 frames
+  latency    : device=0 safety=0 frames
+  out stream 70: 48000 Hz, 8 ch, Float32, 32 B/frame
+  labels     : FL FR FC LFE BL BR SL SR
+  NOTE       : HomePod Flow virtual device (reused, never modified by this tool)

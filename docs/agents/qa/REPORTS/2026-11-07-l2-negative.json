@@ -1,0 +1,152 @@
+{
+  "capture" : {
+    "allSilent" : true,
+    "callbacks" : 206,
+    "droppedBlocks" : 0,
+    "durationSeconds" : 2.18675575,
+    "expectedFrames" : 104964.276,
+    "firstHostTime" : 112670594890,
+    "frames" : 105472,
+    "lastHostTime" : 112723077028,
+    "lostFramesEstimate" : 0,
+    "nonzeroSamples" : [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "peak" : [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "peakDBFS" : [
+      -120,
+      -120,
+      -120,
+      -120,
+      -120,
+      -120,
+      -120,
+      -120
+    ],
+    "rms" : [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "timestampFlags" : 7,
+    "zeroFrames" : 105472
+  },
+  "device" : {
+    "bufferFrameSize" : 512,
+    "deviceLatencyFrames" : 0,
+    "id" : 69,
+    "inputChannels" : 0,
+    "inputStreams" : [
+
+    ],
+    "isHomePodFlowDevice" : true,
+    "isVirtual" : true,
+    "modelUID" : "com.homepodflow.virtual-audio.model.surround71.v1",
+    "name" : "HomePod Flow Audio",
+    "nominalSampleRate" : 48000,
+    "outputChannels" : 8,
+    "outputStreams" : [
+      {
+        "direction" : "output",
+        "id" : 70,
+        "physicalFormat" : {
+          "bitsPerChannel" : 32,
+          "bytesPerFrame" : 32,
+          "bytesPerPacket" : 32,
+          "channelsPerFrame" : 8,
+          "description" : "48000 Hz, 8 ch, Float32, 32 B/frame",
+          "formatFlags" : 9,
+          "formatID" : 1819304813,
+          "framesPerPacket" : 1,
+          "isFloat32Packed" : true,
+          "sampleRate" : 48000
+        },
+        "virtualFormat" : {
+          "bitsPerChannel" : 32,
+          "bytesPerFrame" : 32,
+          "bytesPerPacket" : 32,
+          "channelsPerFrame" : 8,
+          "description" : "48000 Hz, 8 ch, Float32, 32 B/frame",
+          "formatFlags" : 9,
+          "formatID" : 1819304813,
+          "framesPerPacket" : 1,
+          "isFloat32Packed" : true,
+          "sampleRate" : 48000
+        }
+      }
+    ],
+    "preferredOutputChannelLabels" : [
+      "FL",
+      "FR",
+      "FC",
+      "LFE",
+      "BL",
+      "BR",
+      "SL",
+      "SR"
+    ],
+    "safetyOffsetFrames" : 0,
+    "transport" : 1986622068,
+    "transportName" : "Virtual",
+    "uid" : "com.homepodflow.virtual-audio.surround71.v1"
+  },
+  "generatedAt" : "2026-11-07T10:36:15Z",
+  "host" : {
+    "arch" : "arm64",
+    "os" : "Version 26.5.2 (Build 25F84)"
+  },
+  "mode" : "tap",
+  "requestedSeconds" : 2,
+  "schemaVersion" : 1,
+  "tap" : {
+    "aggregateUID" : "com.mdxz.facetime.recorder.aggregate.B48D3932-10B4-40AD-A5D2-FD540CB2ECC8",
+    "bytesPerFrame" : 32,
+    "channels" : 8,
+    "clockDeviceUID" : "BuiltInSpeakerDevice",
+    "deviceUID" : "com.homepodflow.virtual-audio.surround71.v1",
+    "formatFlags" : 9,
+    "sampleRate" : 48000,
+    "tapUID" : "D2EF0B09-BEAD-44C4-96FD-FEB065A01D63"
+  },
+  "tone" : {
+    "amplitude" : "0.08",
+    "deviceUID" : "com.homepodflow.virtual-audio.surround71.v1",
+    "frequencyHz" : "1000"
+  },
+  "tool" : "AudioProbe",
+  "verdict" : {
+    "callbacksAlive" : true,
+    "code" : "all_zero_pcm",
+    "explanation" : "Callbacks and frames are healthy but every sample is exactly zero. For a device tap this is the signature of missing audio-capture (TCC) authorization, or nothing is rendering to the device. It is not proof that FaceTime audio works.",
+    "pcmNonZero" : false
+  },
+  "version" : "1.0.0",
+  "wavInfo" : {
+    "bitsPerSample" : 32,
+    "channels" : 2,
+    "dataBytes" : 843776,
+    "sampleRate" : 48000
+  },
+  "wavPath" : "build/qa-evidence/l2-negative/fr-no-tcc.wav"
+}

@@ -1,0 +1,31 @@
+Probe mode      : tap
+Device          : HomePod Flow Audio
+UID             : com.homepodflow.virtual-audio.surround71.v1
+Direction       : in=0 / out=8
+Nominal rate    : 48000 Hz
+Buffer frames   : 512
+Requested time  : 2.0 s
+Tap UID         : D2EF0B09-BEAD-44C4-96FD-FEB065A01D63
+Tap format      : 48000 Hz, 8 ch
+Aggregate clock : BuiltInSpeakerDevice
+WAV channels    : 0,1
+WAV output      : build/qa-evidence/l2-negative/fr-no-tcc.wav
+Self-test tone  : 1 kHz -> com.homepodflow.virtual-audio.surround71.v1
+t=  1.0s cb=112(+112) frames=57344(+57344) rate=57056/s rms[ch0=0.0000 ch1=0.0000 ch2=0.0000 ch3=0.0000 ch4=0.0000 ch5=0.0000 ch6=0.0000 ch7=0.0000] peak=[0.000,0.000,0.000,0.000,0.000,0.000,0.000,0.000]
+
+Result          : all_zero_pcm
+Callbacks       : 206
+Frames          : 105472 (expected ≈ 104964, lost ≈ 0)
+Dropped blocks  : 0
+Silent frames   : 105472 / 105472
+ch0             : rms=0.000000 peak=0.000000 (-120.0 dBFS) nonzero=0
+ch1             : rms=0.000000 peak=0.000000 (-120.0 dBFS) nonzero=0
+ch2             : rms=0.000000 peak=0.000000 (-120.0 dBFS) nonzero=0
+ch3             : rms=0.000000 peak=0.000000 (-120.0 dBFS) nonzero=0
+ch4             : rms=0.000000 peak=0.000000 (-120.0 dBFS) nonzero=0
+ch5             : rms=0.000000 peak=0.000000 (-120.0 dBFS) nonzero=0
+ch6             : rms=0.000000 peak=0.000000 (-120.0 dBFS) nonzero=0
+ch7             : rms=0.000000 peak=0.000000 (-120.0 dBFS) nonzero=0
+WAV             : 2.20 s, 2 ch, 48000 Hz
+Explanation     : Callbacks and frames are healthy but every sample is exactly zero. For a device tap this is the signature of missing audio-capture (TCC) authorization, or nothing is rendering to the device. It is not proof that FaceTime audio works.
+Report          : build/qa-evidence/l2-negative/fr-no-tcc.json

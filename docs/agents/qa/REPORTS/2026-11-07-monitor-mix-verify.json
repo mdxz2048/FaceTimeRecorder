@@ -1,0 +1,120 @@
+{
+  "tool": "verify_mix.py",
+  "remoteHz": 440,
+  "micHz": 880,
+  "expectMic": false,
+  "ffmpeg": "/opt/homebrew/bin/ffmpeg",
+  "ffprobe": "/opt/homebrew/bin/ffprobe",
+  "mp4": {
+    "path": "/Users/lvzhipeng/Developer/FaceTimeRecorder/artifacts/G1-2026-11-07/monitor-mix/FaceTime.mp4",
+    "audioTracks": 1,
+    "videoTracks": 0,
+    "durationSeconds": 6.058667,
+    "tracks": [
+      {
+        "ordinal": 0,
+        "handler": "FaceTime Mix",
+        "title": null,
+        "rms": 0.0352570749327596,
+        "amplitudes": {
+          "440": 0.03251101487833348,
+          "880": 4.0920657765013475e-06,
+          "660": 9.475188702129883e-06,
+          "1000": 8.414511304505058e-07,
+          "1320": 5.831400131294394e-07
+        }
+      }
+    ]
+  },
+  "mkv": {
+    "path": "/Users/lvzhipeng/Developer/FaceTimeRecorder/artifacts/G1-2026-11-07/monitor-mix/FaceTime.mkv",
+    "audioTracks": 2,
+    "durationSeconds": 6.091,
+    "tracks": [
+      {
+        "ordinal": 0,
+        "title": "Mix (Remote + Mic)",
+        "handler": "FaceTime Mix",
+        "rms": 0.035318769484323095,
+        "amplitudes": {
+          "440": 0.03597644568788718,
+          "880": 2.639021930007684e-06,
+          "660": 9.64781705390652e-06,
+          "1000": 1.1029331389695001e-06,
+          "1320": 2.8684949553654923e-06
+        }
+      },
+      {
+        "ordinal": 1,
+        "title": "Remote",
+        "handler": "FaceTime Remote",
+        "rms": 0.035318769484323095,
+        "amplitudes": {
+          "440": 0.03597644568788718,
+          "880": 2.639021930007684e-06,
+          "660": 9.64781705390652e-06,
+          "1000": 1.1029331389695001e-06,
+          "1320": 2.8684949553654923e-06
+        }
+      }
+    ]
+  },
+  "checks": [
+    {
+      "name": "MP4 has exactly one audio track",
+      "pass": true,
+      "detail": "audio_tracks=1"
+    },
+    {
+      "name": "MP4 duration",
+      "pass": true,
+      "detail": "duration=6.059 s (need >= 5.000)"
+    },
+    {
+      "name": "MP4 mix 440 Hz present",
+      "pass": true,
+      "detail": "amplitude=0.032511 ratio_to_control=3431.2 (need >= 0.002000 and >= 20.0)"
+    },
+    {
+      "name": "MP4 mix 880 Hz absent",
+      "pass": true,
+      "detail": "amplitude=0.000004 ratio_to_control=0.4 (need <= 0.001000 and <= 5.0)"
+    },
+    {
+      "name": "MKV audio track count",
+      "pass": true,
+      "detail": "tracks=2 expected=2"
+    },
+    {
+      "name": "MKV audio track titles and order",
+      "pass": true,
+      "detail": "actual=['Mix (Remote + Mic)', 'Remote'] expected=['Mix (Remote + Mic)', 'Remote']"
+    },
+    {
+      "name": "MKV duration",
+      "pass": true,
+      "detail": "duration=6.091 s (need >= 5.000)"
+    },
+    {
+      "name": "MKV Mix (Remote + Mic) 440 Hz present",
+      "pass": true,
+      "detail": "amplitude=0.035976 ratio_to_control=3729.0 (need >= 0.002000 and >= 20.0)"
+    },
+    {
+      "name": "MKV Mix (Remote + Mic) 880 Hz absent",
+      "pass": true,
+      "detail": "amplitude=0.000003 ratio_to_control=0.3 (need <= 0.001000 and <= 5.0)"
+    },
+    {
+      "name": "MKV Remote 440 Hz present",
+      "pass": true,
+      "detail": "amplitude=0.035976 ratio_to_control=3729.0 (need >= 0.002000 and >= 20.0)"
+    },
+    {
+      "name": "MKV Remote 880 Hz absent",
+      "pass": true,
+      "detail": "amplitude=0.000003 ratio_to_control=0.3 (need <= 0.001000 and <= 5.0)"
+    }
+  ],
+  "pass": true
+}

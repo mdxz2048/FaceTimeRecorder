@@ -1,0 +1,50 @@
+{
+  "tool": "verify_monitor_route.py",
+  "diagnostics": "/Users/lvzhipeng/Developer/FaceTimeRecorder/artifacts/G1-2026-11-07/monitor-mix/diagnostics.json",
+  "tapUID": "com.homepodflow.virtual-audio.surround71.v1",
+  "monitorUID": "BuiltInSpeakerDevice",
+  "outputTakeOver": false,
+  "checks": [
+    {
+      "name": "diagnostics has tap UID",
+      "pass": true,
+      "detail": "tap.deviceUID=com.homepodflow.virtual-audio.surround71.v1"
+    },
+    {
+      "name": "diagnostics has monitor output UID",
+      "pass": true,
+      "detail": "monitor.outputDeviceUID=BuiltInSpeakerDevice"
+    },
+    {
+      "name": "monitor output differs from capture device",
+      "pass": true,
+      "detail": "tap=com.homepodflow.virtual-audio.surround71.v1 monitor=BuiltInSpeakerDevice"
+    },
+    {
+      "name": "monitor output sample rate is positive",
+      "pass": true,
+      "detail": "outputSampleRate=48000"
+    },
+    {
+      "name": "no monitor output setup warning",
+      "pass": true,
+      "detail": "warnings=[]"
+    },
+    {
+      "name": "monitor UID is a known device",
+      "pass": true,
+      "detail": "uid=BuiltInSpeakerDevice"
+    },
+    {
+      "name": "monitor device has output channels",
+      "pass": true,
+      "detail": "direction out=2"
+    },
+    {
+      "name": "monitor device is not virtual",
+      "pass": true,
+      "detail": "transport=Built-in"
+    }
+  ],
+  "pass": true
+}

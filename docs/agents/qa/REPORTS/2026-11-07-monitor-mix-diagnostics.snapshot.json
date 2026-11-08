@@ -1,0 +1,248 @@
+{
+  "appVersion" : "1.0.0",
+  "events" : [
+    {
+      "at" : "2026-11-07T10:24:28Z",
+      "level" : "info",
+      "message" : "session directory: /tmp/fr-session/FaceTime-20261107-182428"
+    },
+    {
+      "at" : "2026-11-07T10:24:28Z",
+      "level" : "info",
+      "message" : "远端 tap 已启动：48000 Hz / 8 ch"
+    },
+    {
+      "at" : "2026-11-07T10:24:28Z",
+      "level" : "info",
+      "message" : "录制开始"
+    },
+    {
+      "at" : "2026-11-07T10:24:34Z",
+      "level" : "info",
+      "message" : "正在停止"
+    },
+    {
+      "at" : "2026-11-07T10:24:34Z",
+      "level" : "info",
+      "message" : "封装中（remote offset 0.033 s）"
+    },
+    {
+      "at" : "2026-11-07T10:24:34Z",
+      "level" : "info",
+      "message" : "MKV 封装完成"
+    },
+    {
+      "at" : "2026-11-07T10:24:35Z",
+      "level" : "info",
+      "message" : "MP4（双方混音）导出完成"
+    }
+  ],
+  "finishedAt" : "2026-11-07T10:24:35Z",
+  "host" : {
+    "arch" : "arm64",
+    "os" : "版本26.5.2（版号25F84）"
+  },
+  "monitor" : {
+    "aecEnabled" : false,
+    "engineRunning" : false,
+    "monitorRingOverflows" : 0,
+    "monitorUnderrunFrames" : 8,
+    "outputDeviceName" : "MacBook Pro扬声器",
+    "outputDeviceUID" : "BuiltInSpeakerDevice",
+    "outputSampleRate" : 48000,
+    "warnings" : [
+
+    ]
+  },
+  "mp4Mux" : {
+    "command" : [
+      "/opt/homebrew/bin/ffmpeg",
+      "-y",
+      "-hide_banner",
+      "-loglevel",
+      "warning",
+      "-itsoffset",
+      "0.0334",
+      "-i",
+      "/tmp/fr-session/FaceTime-20261107-182428/remote.wav",
+      "-filter_complex",
+      "[0:a]aformat=sample_fmts=fltp:sample_rates=48000:channel_layouts=stereo,volume=1.0[rmt];[rmt]anull[mix]",
+      "-map",
+      "[mix]",
+      "-c:a",
+      "aac",
+      "-b:a",
+      "256k",
+      "-ar",
+      "48000",
+      "-ac",
+      "2",
+      "-metadata:s:a:0",
+      "title=Mix (Remote + Mic)",
+      "-metadata:s:a:0",
+      "handler_name=FaceTime Mix",
+      "-movflags",
+      "+faststart",
+      "-fflags",
+      "+genpts",
+      "/tmp/fr-session/FaceTime-20261107-182428/FaceTime.mp4"
+    ],
+    "durationSeconds" : 6.058667,
+    "exitCode" : 0,
+    "stderrTail" : "[aist#0:0/pcm_f32le @ 0xbd9400180] Guessed Channel Layout: stereo\n",
+    "success" : true
+  },
+  "mux" : {
+    "command" : [
+      "/opt/homebrew/bin/ffmpeg",
+      "-y",
+      "-hide_banner",
+      "-loglevel",
+      "warning",
+      "-itsoffset",
+      "0.0334",
+      "-i",
+      "/tmp/fr-session/FaceTime-20261107-182428/remote.wav",
+      "-filter_complex",
+      "[0:a]aformat=sample_fmts=fltp:sample_rates=48000:channel_layouts=stereo,volume=1.0[rmt];[rmt]anull[mix]",
+      "-map",
+      "[mix]",
+      "-map",
+      "0:a:0",
+      "-c:a",
+      "aac",
+      "-b:a",
+      "256k",
+      "-ar",
+      "48000",
+      "-ac",
+      "2",
+      "-metadata:s:a:0",
+      "title=Mix (Remote + Mic)",
+      "-metadata:s:a:0",
+      "handler_name=FaceTime Mix",
+      "-metadata:s:a:1",
+      "title=Remote",
+      "-metadata:s:a:1",
+      "handler_name=FaceTime Remote",
+      "-fflags",
+      "+genpts",
+      "/tmp/fr-session/FaceTime-20261107-182428/FaceTime.mkv"
+    ],
+    "durationSeconds" : 6.091,
+    "exitCode" : 0,
+    "stderrTail" : "[aist#0:0/pcm_f32le @ 0x728c0c180] Guessed Channel Layout: stereo\n",
+    "success" : true
+  },
+  "outputTakeOver" : false,
+  "remote" : {
+    "callbacks" : 566,
+    "captureFormat" : "48000 Hz, 8 ch, labels=FL,FR,FC,LFE,BL,BR,SL,SR",
+    "channelPeak" : [
+      0.050000004,
+      0.050000004,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "channelRMS" : [
+      0.03534116,
+      0.03534116,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "droppedBlocks" : 0,
+    "frames" : 289792,
+    "monitorPushDroppedFrames" : 0,
+    "silentFrames" : 1,
+    "wavFrames" : 289792
+  },
+  "remoteDevice" : {
+    "bufferFrameSize" : 512,
+    "deviceLatencyFrames" : 0,
+    "id" : 69,
+    "inputChannels" : 0,
+    "inputStreams" : [
+
+    ],
+    "isHomePodFlowDevice" : true,
+    "isVirtual" : true,
+    "modelUID" : "com.homepodflow.virtual-audio.model.surround71.v1",
+    "name" : "HomePod Flow Audio",
+    "nominalSampleRate" : 48000,
+    "outputChannels" : 8,
+    "outputStreams" : [
+      {
+        "direction" : "output",
+        "id" : 70,
+        "physicalFormat" : {
+          "bitsPerChannel" : 32,
+          "bytesPerFrame" : 32,
+          "bytesPerPacket" : 32,
+          "channelsPerFrame" : 8,
+          "description" : "48000 Hz, 8 ch, Float32, 32 B/frame",
+          "formatFlags" : 9,
+          "formatID" : 1819304813,
+          "framesPerPacket" : 1,
+          "isFloat32Packed" : true,
+          "sampleRate" : 48000
+        },
+        "virtualFormat" : {
+          "bitsPerChannel" : 32,
+          "bytesPerFrame" : 32,
+          "bytesPerPacket" : 32,
+          "channelsPerFrame" : 8,
+          "description" : "48000 Hz, 8 ch, Float32, 32 B/frame",
+          "formatFlags" : 9,
+          "formatID" : 1819304813,
+          "framesPerPacket" : 1,
+          "isFloat32Packed" : true,
+          "sampleRate" : 48000
+        }
+      }
+    ],
+    "preferredOutputChannelLabels" : [
+      "FL",
+      "FR",
+      "FC",
+      "LFE",
+      "BL",
+      "BR",
+      "SL",
+      "SR"
+    ],
+    "safetyOffsetFrames" : 0,
+    "transport" : 1986622068,
+    "transportName" : "Virtual",
+    "uid" : "com.homepodflow.virtual-audio.surround71.v1"
+  },
+  "schemaVersion" : 1,
+  "startedAt" : "2026-11-07T10:24:28Z",
+  "tap" : {
+    "aggregateUID" : "com.mdxz.facetime.recorder.aggregate.33F7893F-64AF-469F-BB04-D5820D5FAC96",
+    "bytesPerFrame" : 32,
+    "channels" : 8,
+    "clockDeviceUID" : "BuiltInSpeakerDevice",
+    "deviceUID" : "com.homepodflow.virtual-audio.surround71.v1",
+    "formatFlags" : 9,
+    "sampleRate" : 48000,
+    "tapUID" : "494E0ED1-4BAE-455F-A184-2CE8482C1202"
+  },
+  "verdicts" : [
+    "远端音轨含非零 PCM"
+  ],
+  "video" : {
+    "enabled" : false,
+    "fileBytes" : 0,
+    "frames" : 0,
+    "height" : 0,
+    "width" : 0
+  }
+}
