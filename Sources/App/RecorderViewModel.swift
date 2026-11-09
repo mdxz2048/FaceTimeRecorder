@@ -1046,7 +1046,15 @@ final class RecorderViewModel: ObservableObject {
 
     func revealDiagnostic() {
         if let result = lastResult {
-            revealInFinder(result.diagnosticsURL)
+            // Successful sessions clean up their working folder, so fall back
+            // to the exported video.
+            if FileManager.default.fileExists(atPath: result.diagnosticsURL.path) {
+                revealInFinder(result.diagnosticsURL)
+            } else if let video = result.mp4URL {
+                revealInFinder(video)
+            } else {
+                revealInFinder(result.sessionDirectory)
+            }
         } else if let url = lastFailure?.diagnosticURL {
             revealInFinder(url)
         } else {

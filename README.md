@@ -1,3 +1,10 @@
+20261109
+
+1. 录制结束后只保留一个 MP4 文件，自动清理 screen.mov 与两条 WAV 临时素材。
+2. 所有录制直接输出到 ~/Movies/FaceTime Recorder/，文件名为 2026-11-09-FaceTime-1.mp4，同一天重复录制编号递增。
+3. 导出失败时保留临时素材与诊断文件，便于排查。
+4. 版本号更新为 1.1.0 (3)。
+
 20261108
 
 1. 新增 FaceTime 通话画面录制（ScreenCaptureKit，Retina 2×，H.264，VideoToolbox 硬件编码）。

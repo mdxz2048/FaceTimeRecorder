@@ -115,17 +115,19 @@ public final class RecorderEngine: @unchecked Sendable {
 
         do {
             try validate(configuration)
-            let directory = try makeSessionDirectory(base: configuration.outputDirectory)
+            let directory = try makeWorkingDirectory(base: configuration.outputDirectory)
+            let finalVideo = Self.uniqueVideoURL(in: configuration.outputDirectory)
             let sessionFiles = SessionFiles(
                 directory: directory,
                 video: directory.appendingPathComponent("screen.mov"),
                 remoteWAV: directory.appendingPathComponent("remote.wav"),
                 micWAV: directory.appendingPathComponent("microphone.wav"),
                 mkv: directory.appendingPathComponent("FaceTime.mkv"),
-                mp4: directory.appendingPathComponent("FaceTime.mp4"),
+                mp4: finalVideo,
                 diagnostics: directory.appendingPathComponent("diagnostics.json"))
             lock.lock(); files = sessionFiles; self.configuration = configuration; lock.unlock()
-            addEvent("session directory: \(directory.path)")
+            addEvent("working directory: \(directory.path)")
+            addEvent("output file: \(finalVideo.path)")
             progress("session directory created")
 
             // ScreenCaptureKit system audio records FaceTime before the output
@@ -439,6 +441,10 @@ public final class RecorderEngine: @unchecked Sendable {
                                                : "视频导出失败：\(mp4Result.stderrTail)",
                              level: mp4Result.success ? "info" : "error")
                 }
+                if mp4Result?.success != true {
+                    // Never leave a half-written MP4 in the output folder.
+                    try? FileManager.default.removeItem(at: sessionFiles.mp4)
+                }
             } catch {
                 addEvent("视频导出异常：\(error)", level: "error")
             }
@@ -456,6 +462,17 @@ public final class RecorderEngine: @unchecked Sendable {
                                            muxResult: nil,
                                            mp4Result: mp4Result)
         try? DiagnosticsWriter.write(diagnostics, to: sessionFiles.diagnostics)
+
+        // One file per session: once the MP4 is good, the raw screen.mov and
+        // WAVs are no longer needed. On failure they stay for recovery.
+        if mp4Result?.success == true {
+            do {
+                try FileManager.default.removeItem(at: sessionFiles.directory)
+                addEvent("已清理临时素材，仅保留 \(sessionFiles.mp4.lastPathComponent)")
+            } catch {
+                addEvent("清理临时素材失败：\(error)", level: "warning")
+            }
+        }
 
         // Reset session objects but keep last result paths for the UI.
         tap = nil; processTap = nil; keepAlive = nil; monitor = nil; remote = nil; mic = nil; screen = nil
@@ -653,14 +670,37 @@ public final class RecorderEngine: @unchecked Sendable {
         }?.uid
     }
 
-    private func makeSessionDirectory(base: URL) throws -> URL {
+    /// Scratch space for the raw tracks. Hidden and removed once the single
+    /// deliverable has been exported successfully.
+    private func makeWorkingDirectory(base: URL) throws -> URL {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.dateFormat = "yyyyMMdd-HHmmss"
-        let directory = base.appendingPathComponent("FaceTime-\(formatter.string(from: Date()))",
+        let directory = base.appendingPathComponent(".recording-\(formatter.string(from: Date()))",
                                                     isDirectory: true)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         return directory
+    }
+
+    /// The one file a session leaves behind: `2026-11-09-FaceTime-1.mp4`.
+    /// The number keeps counting up within the same day.
+    static func uniqueVideoURL(in base: URL, date: Date = Date()) -> URL {
+        try? FileManager.default.createDirectory(at: base, withIntermediateDirectories: true)
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.dateFormat = "yyyy-MM-dd"
+        let stem = "\(formatter.string(from: date))-FaceTime"
+        let prefix = stem + "-"
+        var highest = 0
+        if let names = try? FileManager.default.contentsOfDirectory(atPath: base.path) {
+            for name in names where name.hasPrefix(prefix) && name.hasSuffix(".mp4") {
+                let number = name.dropFirst(prefix.count).dropLast(4)
+                if let value = Int(number) {
+                    highest = max(highest, value)
+                }
+            }
+        }
+        return base.appendingPathComponent("\(stem)-\(highest + 1).mp4")
     }
 
     private func addEvent(_ message: String, level: String = "info") {
