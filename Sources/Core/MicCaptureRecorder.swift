@@ -26,14 +26,34 @@ public final class MicCaptureRecorder: @unchecked Sendable {
 
     public init(input: DirectInputCapture,
                 wavURL: URL,
-                format: AudioStreamBasicDescription) throws {
+                format: AudioStreamBasicDescription,
+                append: Bool = false) throws {
         self.input = input
         self.nativeFormat = format
         self.wavURL = wavURL
         self.outputFormat = AVAudioFormat(commonFormat: .pcmFormatFloat32,
                                           sampleRate: 48_000, channels: 2,
                                           interleaved: true)!
-        self.writer = try WAVWriter(url: wavURL, sampleRate: 48_000, channels: 2)
+        self.writer = try WAVWriter(url: wavURL, sampleRate: 48_000, channels: 2,
+                                    appendIfExists: append)
+    }
+
+    /// Fills the gap left by a capture restart so the track stays aligned with
+    /// the video timeline. Call before `start()`.
+    public func padSilence(seconds: Double) {
+        guard seconds > 0.001, let writer else { return }
+        let total = Int(seconds * 48_000)
+        guard total > 0 else { return }
+        let chunk = 16_384
+        let zeros = [Float](repeating: 0, count: chunk * 2)
+        lock.lock()
+        var remaining = total
+        while remaining > 0 {
+            let frames = min(remaining, chunk)
+            try? writer.write(zeros, frames: frames)
+            remaining -= frames
+        }
+        lock.unlock()
     }
 
     public func start() {

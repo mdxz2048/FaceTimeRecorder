@@ -49,8 +49,8 @@ targets:
         INFOPLIST_FILE: Resources/Info-App.plist
         CODE_SIGN_ENTITLEMENTS: Resources/FaceTimeRecorder.entitlements
         SWIFT_OBJC_BRIDGING_HEADER: Sources/Support/BridgingHeader.h
-        CURRENT_PROJECT_VERSION: 3
-        MARKETING_VERSION: 1.1.0
+        CURRENT_PROJECT_VERSION: 4
+        MARKETING_VERSION: 1.2.0
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
   CoreTests:
     type: bundle.unit-test

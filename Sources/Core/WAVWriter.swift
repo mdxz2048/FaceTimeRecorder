@@ -27,7 +27,11 @@ public final class WAVWriter {
     private let lock = NSLock()
     private var closed = false
 
-    public init(url: URL, sampleRate: Double, channels: Int) throws {
+    /// `appendIfExists` continues an existing float32 WAV instead of
+    /// truncating it, so a capture that has to restart (FaceTime switches its
+    /// audio graph when a call connects) keeps one continuous track.
+    public init(url: URL, sampleRate: Double, channels: Int,
+                appendIfExists: Bool = false) throws {
         guard channels > 0, channels <= 32, sampleRate > 0 else {
             throw WAVWriterError.cannotCreate(url.path)
         }
@@ -37,6 +41,23 @@ public final class WAVWriter {
         let manager = FileManager.default
         try? manager.createDirectory(at: url.deletingLastPathComponent(),
                                      withIntermediateDirectories: true)
+        var existingFrames: UInt64 = 0
+        var appending = false
+        if appendIfExists,
+           let info = try? WAVReader.info(url: url),
+           Int(info.sampleRate) == Int(sampleRate),
+           info.channels == channels,
+           info.bitsPerSample == 32,
+           info.dataBytes > 0 {
+            existingFrames = info.dataBytes / UInt64(channels * 4)
+            appending = existingFrames > 0
+        }
+        if appending, let handle = try? FileHandle(forUpdating: url) {
+            self.handle = handle
+            self.framesWritten = existingFrames
+            try handle.seekToEnd()
+            return
+        }
         guard manager.createFile(atPath: url.path, contents: nil) else {
             throw WAVWriterError.cannotCreate(url.path)
         }

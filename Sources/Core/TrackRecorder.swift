@@ -45,7 +45,8 @@ public final class RemoteAudioRecorder: @unchecked Sendable {
                 labels: [String],
                 mode: RemoteChannelMode,
                 wavURL: URL?,
-                monitorRing: OpaquePointer?) throws {
+                monitorRing: OpaquePointer?,
+                append: Bool = false) throws {
         self.source = source
         self.sampleRate = descriptor.sampleRate
         self.captureChannels = Int(descriptor.channels)
@@ -60,9 +61,28 @@ public final class RemoteAudioRecorder: @unchecked Sendable {
         if let wavURL {
             let channels = mode == .native ? Int(descriptor.channels) : 2
             self.writer = try WAVWriter(url: wavURL, sampleRate: descriptor.sampleRate,
-                                        channels: channels)
+                                        channels: channels, appendIfExists: append)
             stats.wavURL = wavURL
         }
+    }
+
+    /// Fills the gap left by a tap restart so the remote track keeps matching
+    /// the video timeline. Call before `start()`.
+    public func padSilence(seconds: Double) {
+        guard seconds > 0.001, let writer else { return }
+        let channels = mode == .native ? captureChannels : 2
+        let total = Int(seconds * sampleRate)
+        guard total > 0 else { return }
+        let chunk = 16_384
+        let zeros = [Float](repeating: 0, count: chunk * channels)
+        lock.lock()
+        var remaining = total
+        while remaining > 0 {
+            let frames = min(remaining, chunk)
+            try? writer.write(zeros, frames: frames)
+            remaining -= frames
+        }
+        lock.unlock()
     }
 
     public func start() {

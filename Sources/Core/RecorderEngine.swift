@@ -79,6 +79,17 @@ public final class RecorderEngine: @unchecked Sendable {
     private var didTakeOverOutput = false
     private var remoteDeviceInfo: AudioDeviceInfo?
     private var tapDescriptorValue: TapDescriptor?
+    private var remoteTapWatcher: DispatchSourceTimer?
+    private let remoteTapQueue = DispatchQueue(label: "com.mdxz.facetime.recorder.tap-watch")
+    private var audioWatchdog: DispatchSourceTimer?
+    private let audioWatchQueue = DispatchQueue(label: "com.mdxz.facetime.recorder.audio-watch")
+    private var remoteStallTicks = 0
+    private var micStallTicks = 0
+    private var lastRemoteFrames: UInt64 = 0
+    private var lastMicFrames: UInt64 = 0
+    private var lastRemoteAdvance = Date()
+    private var lastMicAdvance = Date()
+    private var audioRebuilds = 0
 
     public init() {}
 
@@ -130,43 +141,12 @@ public final class RecorderEngine: @unchecked Sendable {
             addEvent("output file: \(finalVideo.path)")
             progress("session directory created")
 
-            // ScreenCaptureKit system audio records FaceTime before the output
-            // device, so it does not depend on FaceTime routing to the virtual
-            // sink. It also means FaceTime keeps playing through the Mac, so
-            // no separate monitor is needed.
+            // Remote audio always comes from the avconferenced process tap.
+            // ScreenCaptureKit system audio deliberately excludes call audio
+            // (`excludedCallingClientAudio`), so it can only ever record the
+            // ringback tone, never the person on the other end.
             let avConferencePID = configuration.recordRemote
                 ? ProcessTapCapture.findProcess(named: "avconferenced") : nil
-            let useProcessTap = configuration.recordRemote && avConferencePID != nil
-            let useSCKAudio = configuration.recordRemote && configuration.recordVideo && !useProcessTap
-            let wantsMonitor = configuration.monitorEnabled &&
-                configuration.recordRemote && !useSCKAudio && !useProcessTap
-            let resolvedMonitorUID = configuration.recordRemote
-                ? resolveMonitorUID(configuration.monitorOutputUID,
-                                    remoteUID: configuration.remoteDeviceUID)
-                : nil
-
-            if configuration.recordRemote && !useSCKAudio && !useProcessTap && performSelfTest {
-                let result = runSelfTest(deviceUID: configuration.remoteDeviceUID,
-                                         seconds: 1.0)
-                addEvent("采集自检：\(result.code.rawValue) \(result.detail)")
-                guard result.passed else {
-                    throw RecorderEngineError.selfTestFailed(result)
-                }
-            }
-            progress("self-test step done")
-
-            var monitor: AUHALMonitor?
-            if wantsMonitor, let resolvedMonitorUID {
-                // Dedicated AUHAL output: starts even while FaceTime owns its
-                // voice-processing graph, unlike AVAudioEngine.
-                let output = AUHALMonitor()
-                try output.start(deviceUID: resolvedMonitorUID,
-                                 volume: configuration.monitorVolume)
-                self.monitor = output
-                monitor = output
-                addEvent("监听输出：\(output.status.outputDeviceName ?? resolvedMonitorUID)")
-            }
-            progress("monitor step done running=\(monitor?.status.engineRunning == true)")
 
             var micInput: DirectInputCapture?
             var micFormatValue: AudioStreamBasicDescription?
@@ -180,83 +160,19 @@ public final class RecorderEngine: @unchecked Sendable {
             }
             progress("microphone step done")
 
-            // Switch the system default only after the monitor is bound to the
-            // physical device, so the call audio keeps playing through the Mac.
-            if configuration.recordRemote && !useSCKAudio && !useProcessTap &&
-                configuration.takeOverSystemOutput {
-                didTakeOverOutput = try router.takeOver(virtualDeviceUID: configuration.remoteDeviceUID)
-                addEvent(didTakeOverOutput
-                         ? "已将系统默认输出切换到虚拟声卡（会话结束后恢复）"
-                         : "系统默认输出已经是虚拟声卡，未接管")
-            }
-            progress("takeover step done")
-
-            if let monitor, let actual = monitor.currentOutputDeviceUID,
-               actual != resolvedMonitorUID {
-                addEvent("警告：监听实际输出 \(actual) 与预期 \(resolvedMonitorUID ?? "nil") 不一致",
-                         level: "warning")
-            }
-
-            if useProcessTap, let avConferencePID {
-                let tap = ProcessTapCapture()
-                let descriptor = try tap.start(processID: avConferencePID)
-                self.processTap = tap
-                lock.lock(); tapDescriptorValue = descriptor; lock.unlock()
-                addEvent("远端音频：avconferenced 进程 tap (pid \(avConferencePID))")
-                let remote = try RemoteAudioRecorder(source: tap,
-                                                     descriptor: descriptor,
-                                                     labels: ["FL", "FR"],
-                                                     mode: .stereoDownmix,
-                                                     wavURL: sessionFiles.remoteWAV,
-                                                     monitorRing: nil)
-                self.remote = remote
-                remote.start()
-                let deadline = Date().addingTimeInterval(1.5)
-                while Date() < deadline {
-                    if remote.snapshot.frames > 0 { break }
-                    usleep(20_000)
+            if configuration.recordRemote {
+                if let avConferencePID {
+                    try attachRemoteTap(processID: avConferencePID,
+                                        sessionFiles: sessionFiles)
+                } else {
+                    // FaceTime has not started yet (no call placed). Wait for
+                    // avconferenced and attach the tap the moment it appears;
+                    // recording a source that can never contain call audio is
+                    // worse than starting the remote track a little late.
+                    remoteFirstHostTime = mach_absolute_time()
+                    addEvent("FaceTime 未运行：等待通话建立后自动接入对方声音", level: "warning")
+                    startRemoteTapWatcher(sessionFiles: sessionFiles)
                 }
-                remoteFirstHostTime = remote.snapshot.firstHostTime
-            } else if configuration.recordRemote && !useSCKAudio {
-                // Keep the sink's IO running even before FaceTime renders, so
-                // the tap always delivers blocks (silence if nothing is routed).
-                let keepAlive = SilentKeepAlive()
-                try keepAlive.start(deviceUID: configuration.remoteDeviceUID)
-                self.keepAlive = keepAlive
-                let tap = DeviceTapCapture()
-                let descriptor = try tap.start(deviceUID: configuration.remoteDeviceUID,
-                                               preferredClockUID: resolvedMonitorUID)
-                self.tap = tap
-                lock.lock(); tapDescriptorValue = descriptor; lock.unlock()
-                addEvent("远端 tap 已启动：\(Int(descriptor.sampleRate)) Hz / \(descriptor.channels) ch")
-                progress("tap started")
-
-                let labels = remoteDeviceInfo?.preferredOutputChannelLabels ?? []
-                let remote = try RemoteAudioRecorder(source: tap,
-                                                     descriptor: descriptor,
-                                                     labels: labels,
-                                                     mode: configuration.remoteChannelMode,
-                                                     wavURL: sessionFiles.remoteWAV,
-                                                     monitorRing: monitor?.ringHandle)
-                self.remote = remote
-                remote.start()
-                progress("remote consumer started")
-
-                // The virtual device only runs its IO while a client renders
-                // to it. Without FaceTime audio the tap can legitimately
-                // deliver nothing, so wait briefly and then keep recording.
-                let deadline = Date().addingTimeInterval(1.5)
-                while Date() < deadline {
-                    let snapshot = remote.snapshot
-                    if snapshot.frames > 0 { break }
-                    usleep(20_000)
-                }
-                let snapshot = remote.snapshot
-                if snapshot.frames == 0 {
-                    addEvent("远端设备当前空闲：尚未收到音频块。请在 FaceTime 通话中确认有声音；录音会继续等待。",
-                             level: "warning")
-                }
-                remoteFirstHostTime = snapshot.firstHostTime
             } else {
                 remoteFirstHostTime = mach_absolute_time()
             }
@@ -266,14 +182,6 @@ public final class RecorderEngine: @unchecked Sendable {
             // the tap aggregate is still starting.
             if configuration.recordVideo {
                 let recorder = ScreenRecorder()
-                if useSCKAudio {
-                    let audio = try SystemAudioRecorder(url: sessionFiles.remoteWAV)
-                    systemAudio = audio
-                    recorder.onAudioSample = { buffer in
-                        audio.append(buffer)
-                    }
-                    addEvent("远端音频：ScreenCaptureKit 系统音频")
-                }
                 // V1 records FaceTime itself, not the whole desktop. Prefer an
                 // explicit window, then auto-detect the FaceTime window; fall
                 // back to the chosen/main display only if FaceTime is closed.
@@ -310,6 +218,7 @@ public final class RecorderEngine: @unchecked Sendable {
             pauseBeganAt = nil
             stateValue = .recording
             lock.unlock()
+            startAudioWatchdog(sessionFiles: sessionFiles)
             addEvent("录制开始")
             return sessionFiles
         } catch {
@@ -317,6 +226,215 @@ public final class RecorderEngine: @unchecked Sendable {
             writeFailureLog(error)
             teardown(failed: true)
             throw error
+        }
+    }
+
+    /// Creates the process tap for FaceTime's call audio and starts writing the
+    /// remote track. Also used for late attachment when the call starts after
+    /// the recording did.
+    private func attachRemoteTap(processID: pid_t, sessionFiles: SessionFiles,
+                                 append: Bool = false,
+                                 padSeconds: Double = 0) throws {
+        let tap = ProcessTapCapture()
+        let descriptor = try tap.start(processID: processID)
+        let remote = try RemoteAudioRecorder(source: tap,
+                                             descriptor: descriptor,
+                                             labels: ["FL", "FR"],
+                                             mode: .stereoDownmix,
+                                             wavURL: sessionFiles.remoteWAV,
+                                             monitorRing: nil,
+                                             append: append)
+        if padSeconds > 0 { remote.padSilence(seconds: padSeconds) }
+        lock.lock()
+        let allowed = stateValue == .preparing || stateValue == .recording || stateValue == .paused
+        guard allowed else {
+            lock.unlock()
+            tap.stop()
+            return
+        }
+        self.processTap = tap
+        self.tapDescriptorValue = descriptor
+        self.remote = remote
+        let wasPaused = stateValue == .paused
+        lock.unlock()
+        if wasPaused { remote.setPaused(true) }
+        remote.start()
+        let deadline = Date().addingTimeInterval(1.5)
+        while Date() < deadline {
+            if remote.snapshot.frames > 0 { break }
+            usleep(20_000)
+        }
+        let first = remote.snapshot.firstHostTime
+        lock.lock()
+        remoteFirstHostTime = first > 0 ? first : mach_absolute_time()
+        lock.unlock()
+        addEvent("远端音频：avconferenced 进程 tap (pid \(processID))")
+    }
+
+    /// Polls for avconferenced so a recording started before the call still
+    /// gets the other party once FaceTime comes up.
+    private func startRemoteTapWatcher(sessionFiles: SessionFiles) {
+        stopRemoteTapWatcher()
+        let timer = DispatchSource.makeTimerSource(queue: remoteTapQueue)
+        timer.schedule(deadline: .now() + 2, repeating: 2)
+        timer.setEventHandler { [weak self] in
+            guard let self else { return }
+            self.lock.lock()
+            let active = self.stateValue == .recording || self.stateValue == .paused
+            let alreadyAttached = self.remote != nil
+            self.lock.unlock()
+            guard active, !alreadyAttached else {
+                timer.cancel()
+                return
+            }
+            guard let pid = ProcessTapCapture.findProcess(named: "avconferenced") else { return }
+            do {
+                try self.attachRemoteTap(processID: pid, sessionFiles: sessionFiles)
+                timer.cancel()
+            } catch {
+                // FaceTime may still be starting up; retry on the next tick.
+            }
+        }
+        lock.lock(); remoteTapWatcher = timer; lock.unlock()
+        timer.resume()
+    }
+
+    private func stopRemoteTapWatcher() {
+        lock.lock()
+        let timer = remoteTapWatcher
+        remoteTapWatcher = nil
+        lock.unlock()
+        timer?.cancel()
+    }
+
+    // MARK: - Capture watchdog
+
+    /// FaceTime activates its voice-processing graph the moment a call
+    /// connects. That tears down the shared devices, so both the process tap
+    /// and the HAL microphone stop delivering. Watch delivery and rebuild the
+    /// affected capture, appending to the same WAV so the track stays one file
+    /// and keeps its timeline.
+    private func startAudioWatchdog(sessionFiles: SessionFiles) {
+        stopAudioWatchdog()
+        remoteStallTicks = 0
+        micStallTicks = 0
+        lastRemoteFrames = 0
+        lastMicFrames = 0
+        lastRemoteAdvance = Date()
+        lastMicAdvance = Date()
+        audioRebuilds = 0
+        let timer = DispatchSource.makeTimerSource(queue: audioWatchQueue)
+        timer.schedule(deadline: .now() + 1, repeating: 1)
+        timer.setEventHandler { [weak self] in
+            guard let self else { return }
+            self.lock.lock()
+            let state = self.stateValue
+            let remoteRec = self.remote
+            let micRec = self.mic
+            self.lock.unlock()
+            guard state == .recording else {
+                if state == .paused {
+                    self.remoteStallTicks = 0
+                    self.micStallTicks = 0
+                }
+                return
+            }
+            if let remoteRec {
+                let frames = remoteRec.snapshot.frames
+                if frames > self.lastRemoteFrames {
+                    self.lastRemoteFrames = frames
+                    self.lastRemoteAdvance = Date()
+                    self.remoteStallTicks = 0
+                } else {
+                    self.remoteStallTicks += 1
+                    if self.remoteStallTicks >= 5 {
+                        self.rebuildRemoteGraph(sessionFiles: sessionFiles)
+                    }
+                }
+            }
+            if let micRec {
+                let frames = micRec.snapshot.frames
+                if frames > self.lastMicFrames {
+                    self.lastMicFrames = frames
+                    self.lastMicAdvance = Date()
+                    self.micStallTicks = 0
+                } else {
+                    self.micStallTicks += 1
+                    if self.micStallTicks >= 5 {
+                        self.rebuildMicrophoneGraph(sessionFiles: sessionFiles)
+                    }
+                }
+            }
+        }
+        lock.lock(); audioWatchdog = timer; lock.unlock()
+        timer.resume()
+    }
+
+    private func stopAudioWatchdog() {
+        lock.lock()
+        let timer = audioWatchdog
+        audioWatchdog = nil
+        lock.unlock()
+        timer?.cancel()
+    }
+
+    private func rebuildRemoteGraph(sessionFiles: SessionFiles) {
+        remoteStallTicks = 0
+        audioRebuilds += 1
+        guard audioRebuilds <= 30 else { return }
+        let pad = Date().timeIntervalSince(lastRemoteAdvance)
+        lock.lock()
+        let oldRecorder = remote
+        let oldTap = processTap
+        remote = nil
+        processTap = nil
+        lock.unlock()
+        _ = oldRecorder?.stop()
+        oldTap?.stop()
+        lastRemoteFrames = 0
+        lastRemoteAdvance = Date()
+        guard let pid = ProcessTapCapture.findProcess(named: "avconferenced") else { return }
+        do {
+            try attachRemoteTap(processID: pid,
+                                sessionFiles: sessionFiles,
+                                append: true,
+                                padSeconds: pad)
+            addEvent("对方声音：检测到中断，已重建采集并继续", level: "warning")
+        } catch {
+            addEvent("对方声音重建失败：\(error)", level: "error")
+        }
+    }
+
+    private func rebuildMicrophoneGraph(sessionFiles: SessionFiles) {
+        micStallTicks = 0
+        audioRebuilds += 1
+        guard audioRebuilds <= 30 else { return }
+        let pad = Date().timeIntervalSince(lastMicAdvance)
+        lock.lock()
+        let configuration = self.configuration
+        let oldRecorder = mic
+        let oldInput = micInput
+        mic = nil
+        micInput = nil
+        lock.unlock()
+        _ = oldRecorder?.stop()
+        oldInput?.stop()
+        lastMicFrames = 0
+        lastMicAdvance = Date()
+        guard let uid = configuration?.microphoneUID else { return }
+        do {
+            let input = DirectInputCapture()
+            let format = try input.start(deviceUID: uid)
+            let recorder = try MicCaptureRecorder(input: input,
+                                                  wavURL: sessionFiles.micWAV,
+                                                  format: format,
+                                                  append: true)
+            if pad > 0 { recorder.padSilence(seconds: pad) }
+            lock.lock(); micInput = input; mic = recorder; lock.unlock()
+            recorder.start()
+            addEvent("麦克风：检测到中断，已重启采集并继续", level: "warning")
+        } catch {
+            addEvent("麦克风重启失败：\(error)", level: "error")
         }
     }
 
@@ -369,6 +487,8 @@ public final class RecorderEngine: @unchecked Sendable {
         lock.unlock()
         addEvent("正在停止")
 
+        stopRemoteTapWatcher()
+        stopAudioWatchdog()
         screen?.setPaused(false)
         remote?.setPaused(false)
         mic?.setPaused(false)
@@ -728,6 +848,8 @@ public final class RecorderEngine: @unchecked Sendable {
     }
 
     private func teardown(failed: Bool) {
+        stopRemoteTapWatcher()
+        stopAudioWatchdog()
         screen?.stop()
         _ = mic?.stop()
         _ = remote?.stop()
